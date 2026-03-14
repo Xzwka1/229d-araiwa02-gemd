@@ -1,14 +1,15 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI; // สำหรับใช้งาน UI พื้นฐาน
 using UnityEngine.SceneManagement;
+using UnityEngine.UI; // สำหรับใช้งาน UI พื้นฐาน
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance; // ทำเป็น Singleton เพื่อให้สคริปต์อื่นเรียกใช้ง่ายๆ
 
     [Header("UI Elements")]
-    public Text scoreText;
-    public Text timeText;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI timeText;
 
     [Header("Game Settings")]
     public float timeLimit = 60f; // เวลาในการเล่น 60 วินาที
