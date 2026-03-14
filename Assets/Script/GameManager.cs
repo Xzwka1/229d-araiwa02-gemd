@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI timeText;
 
     [Header("Game Settings")]
-    public float timeLimit = 60f; // เวลาในการเล่น 60 วินาที
+    public float timeLimit = 60f; // ดูให้แน่ใจว่าบรรทัดนี้เป็น = 60f; ไม่ใช่ [60]
     private int currentScore = 0;
     private bool isGameOver = false;
 
