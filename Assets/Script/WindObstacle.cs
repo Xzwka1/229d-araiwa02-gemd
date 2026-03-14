@@ -1,12 +1,12 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 
-public class WindZone : MonoBehaviour
+// üéØ ‡πÅ‡∏Å‡πâ‡∏ä‡∏∑‡πà‡∏≠‡∏ï‡∏£‡∏á‡∏ô‡∏µ‡πâ‡∏à‡∏≤‡∏Å WindZone ‡πÄ‡∏õ‡πá‡∏ô WindObstacle ‡πÉ‡∏´‡πâ‡∏ï‡∏£‡∏á‡∏Å‡∏±‡∏ö‡∏ä‡∏∑‡πà‡∏≠‡πÑ‡∏ü‡∏•‡πå
+public class WindObstacle : MonoBehaviour
 {
     [Header("Wind Settings")]
-    public Vector3 windDirection = new Vector3(1, 0, 0); // ∑‘»∑“ß≈¡æ—¥ (·°π X)
-    public float windStrength = 15f; // §«“¡·√ß≈¡
+    public Vector3 windDirection = new Vector3(1, 0, 0);
+    public float windStrength = 15f;
 
-    // ‡¡◊ËÕºŸÈ‡≈ËπÕ¬ŸË„π‚´ππ’È ®–‚¥π≈¡æ—¥µ≈Õ¥‡«≈“
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -14,7 +14,6 @@ public class WindZone : MonoBehaviour
             Rigidbody playerRb = other.GetComponent<Rigidbody>();
             if (playerRb != null)
             {
-                // ¥—πºŸÈ‡≈Ëπ‰ªµ“¡∑‘»∑“ß≈¡
                 playerRb.AddForce(windDirection * windStrength, ForceMode.Force);
             }
         }
