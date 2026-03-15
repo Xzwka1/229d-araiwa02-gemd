@@ -1,62 +1,87 @@
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
+using TMPro; // สำหรับใช้ TextMeshPro
 using UnityEngine.SceneManagement;
-using UnityEngine.UI; // ����Ѻ��ҹ UI ��鹰ҹ
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance; // ���� Singleton �������ʤ�Ի��������¡������
+    public static GameManager instance;
 
     [Header("UI Elements")]
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timeText;
 
     [Header("Game Settings")]
-    public float timeLimit = 60f; // ����������Һ�÷Ѵ����� = 60f; ����� [60]
+    public float timeLimit = 60f;
     private int currentScore = 0;
     private bool isGameOver = false;
 
     void Awake()
     {
-        instance = this;
+        // ตั้งค่าให้ Player เรียกใช้ GameManager ได้จากทุกที่
+        if (instance == null) instance = this;
+    }
+
+    void Start()
+    {
+        // เริ่มเกมมาให้แสดงคะแนนเป็น 0 ทันที
+        UpdateScoreUI();
     }
 
     void Update()
     {
-        if (isGameOver) return;
-
-        // �к��Ѻ���Ҷ����ѧ
-        timeLimit -= Time.deltaTime;
-
-        // �ѻവ UI ˹�Ҩ�
-        timeText.text = "Time: " + Mathf.RoundToInt(timeLimit).ToString();
-        scoreText.text = "Score: " + currentScore.ToString();
-
-        // �����������������ѧ
-        if (timeLimit <= 0)
+        // ระบบนับเวลาถอยหลัง (ถ้าเกมยังไม่จบ)
+        if (!isGameOver && timeLimit > 0)
         {
-            GameOver();
+            timeLimit -= Time.deltaTime;
+            UpdateTimeUI();
+
+            if (timeLimit <= 0)
+            {
+                timeLimit = 0;
+                GameOver();
+            }
         }
     }
 
-    public void AddScore(int amount)
+    // 💰 ฟังก์ชันรับคะแนน (Player จะส่งมาให้ตอนชนเหรียญ)
+    public void AddScore(int scoreToAdd)
     {
-        currentScore += amount;
+        if (isGameOver) return;
+
+        currentScore += scoreToAdd; // บวกคะแนนเพิ่ม
+        UpdateScoreUI(); // สั่งอัปเดตตัวหนังสือบนหน้าจอ
     }
 
-    public void GameOver()
+    // ฟังก์ชันเปลี่ยนข้อความ UI คะแนน
+    private void UpdateScoreUI()
     {
-        isGameOver = true;
-        Debug.Log("Game Over! �������");
-        // �������������ҹ���� �����˹�� Game Over ��ç���
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (scoreText != null)
+        {
+            scoreText.text = "Score: " + currentScore.ToString();
+        }
+    }
+
+    // ฟังก์ชันเปลี่ยนข้อความ UI เวลา
+    private void UpdateTimeUI()
+    {
+        if (timeText != null)
+        {
+            // ปัดเศษทศนิยมทิ้ง จะได้เห็นเวลาเป็นตัวเลขกลมๆ
+            timeText.text = "Time: " + Mathf.CeilToInt(timeLimit).ToString();
+        }
     }
 
     public void GameWin()
     {
         isGameOver = true;
-        Debug.Log("You Win!");
-        // ��Ŵ˹�� Credit ����������鹪��
-        SceneManager.LoadScene("CreditScene");
+        Debug.Log("เข้าเส้นชัยแล้ว! เตรียมโหลดหน้า Credit...");
+        // เดี๋ยวเราค่อยมาเปิดใช้บรรทัดโหลดหน้า Credit ตอนทำฉากเสร็จครับ
+        // SceneManager.LoadScene("CreditScene"); 
+    }
+
+    public void GameOver()
+    {
+        isGameOver = true;
+        Debug.Log("หมดเวลา! เกมโอเวอร์!");
     }
 }
