@@ -1294,6 +1294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   acceleration: 8.5
+  maxSpeed: 8
   brakingForce: 100
 --- !u!54 &1845556995
 Rigidbody:
