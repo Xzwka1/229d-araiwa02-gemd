@@ -75,8 +75,9 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         Debug.Log("เข้าเส้นชัยแล้ว! เตรียมโหลดหน้า Credit...");
-        // เดี๋ยวเราค่อยมาเปิดใช้บรรทัดโหลดหน้า Credit ตอนทำฉากเสร็จครับ
-        // SceneManager.LoadScene("CreditScene"); 
+
+        // เอา // ออก เพื่อให้คำสั่งนี้ทำงาน
+        SceneManager.LoadScene("CreditScene");
     }
 
     public void GameOver()
