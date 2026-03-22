@@ -76,13 +76,23 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         Debug.Log("เข้าเส้นชัยแล้ว! เตรียมโหลดหน้า Credit...");
 
-        // เอา // ออก เพื่อให้คำสั่งนี้ทำงาน
+        // 1. เซฟคะแนนเก็บไว้ก่อนย้ายฉาก
+        PlayerPrefs.SetInt("FinalScore", currentScore);
+        PlayerPrefs.Save();
+
+        // 2. โหลดหน้า Credit
         SceneManager.LoadScene("CreditScene");
     }
 
     public void GameOver()
     {
         isGameOver = true;
-        Debug.Log("หมดเวลา! เกมโอเวอร์!");
+        Debug.Log("หมดเวลา! เกมโอเวอร์! บันทึกคะแนนและไปหน้า Credit");
+
+        // กรณีเวลาหมด ก็ให้เซฟคะแนนแล้วไปหน้า Credit เหมือนกันครับ!
+        PlayerPrefs.SetInt("FinalScore", currentScore);
+        PlayerPrefs.Save();
+
+        SceneManager.LoadScene("CreditScene");
     }
 }
